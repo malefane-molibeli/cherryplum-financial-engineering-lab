@@ -10,24 +10,92 @@ def run():
     st.info("This section provides mathematical derivations used in professional quantitative finance.")
 
     # =========================================================
-    # HEDGE RATIO DERIVATION
+    # HEDGE RATIO DERIVATION — FULL VERSION
     # =========================================================
-    st.subheader("1. Optimal Hedge Ratio — Mathematical Derivation")
+    st.subheader("1. Minimum Variance Hedge Ratio — Full Derivation")
 
-    st.latex(r"Var(\Delta P)=Var(\Delta S-h\Delta F)")
-    st.latex(r"= \sigma_S^2 + h^2\sigma_F^2 -2h\rho\sigma_S\sigma_F")
+    st.markdown("### Step 1: Hedged Portfolio")
 
-    st.markdown("Minimise variance → differentiate:")
+    st.latex(r"P = S - hF")
 
-    st.latex(r"\frac{d}{dh}Var=2h\sigma_F^2-2\rho\sigma_S\sigma_F=0")
+    st.markdown("""
+Where  
+S = change in spot value  
+F = change in futures value  
+h = hedge ratio to be determined  
+""")
+
+    st.markdown("### Step 2: Portfolio Variance")
+
+    st.latex(r"Var(P)=Var(S-hF)")
+
+    st.markdown("Using variance rules:")
+
+    st.latex(r"Var(P)=\sigma_S^2 + h^2\sigma_F^2 -2h\,Cov(S,F)")
+
+    st.markdown("### Step 3: Express covariance using correlation")
+
+    st.latex(r"Cov(S,F)=\rho\sigma_S\sigma_F")
+
+    st.markdown("Correlation behaves like cosine between two risk vectors:")
+
+    st.latex(r"\rho=\cos\theta")
+
+    st.markdown("Substitute into variance:")
+
+    st.latex(r"Var(P)=\sigma_S^2 + h^2\sigma_F^2 -2h\rho\sigma_S\sigma_F")
+
+    st.markdown("### Step 4: Cosine Rule Interpretation")
+
+    st.markdown("""
+Treat spot and futures risk as vectors.
+
+Cosine rule from geometry:
+""")
+
+    st.latex(r"|P|^2 = |S|^2 + |hF|^2 -2|S||hF|\cos\theta")
+
+    st.markdown("""
+Mapping to finance:
+""")
+
+    st.latex(r"|S|=\sigma_S,\quad |F|=\sigma_F,\quad \cos\theta=\rho")
+
+    st.markdown("""
+Hedging is equivalent to projecting spot risk onto futures risk.
+""")
+
+    st.markdown("### Step 5: Minimise variance")
+
+    st.markdown("To obtain minimum risk, differentiate variance with respect to hedge ratio:")
+
+    st.latex(r"\frac{d}{dh}Var(P)=2h\sigma_F^2-2\rho\sigma_S\sigma_F")
+
+    st.markdown("Set derivative equal to zero:")
+
+    st.latex(r"2h\sigma_F^2-2\rho\sigma_S\sigma_F=0")
+
+    st.markdown("Solve for optimal hedge ratio:")
+
+    st.latex(r"h^*\sigma_F^2=\rho\sigma_S\sigma_F")
 
     st.latex(r"h^*=\rho\frac{\sigma_S}{\sigma_F}")
 
-    st.markdown("Regression interpretation:")
+    st.markdown("Equivalent covariance form:")
+
+    st.latex(r"h^*=\frac{Cov(S,F)}{Var(F)}")
+
+    st.markdown("### Step 6: Minimum achievable variance")
+
+    st.latex(r"\sigma^2_{min}=\sigma_S^2(1-\rho^2)")
+
+    st.success("Correlation determines hedge effectiveness. Higher correlation → better hedge.")
+
+    st.markdown("### Regression Interpretation")
 
     st.latex(r"\Delta S=a+b\Delta F+\varepsilon")
 
-    st.markdown("b equals optimal hedge ratio.")
+    st.markdown("Slope coefficient b equals optimal hedge ratio.")
 
     st.markdown("---")
 
